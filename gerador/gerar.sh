@@ -452,7 +452,6 @@ while :
 do
 read -p "Opcion: "
 case $opcion in
-msg -bar
 0)
 exit;;
 1)
