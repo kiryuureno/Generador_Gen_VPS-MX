@@ -414,6 +414,9 @@ export -f fun_trans
 export -f  menu_func
 export -f meu_ipe
 export -f fun_ip
+
+while :
+do
 clear
 #########VISUALIZACION DE MENU
 msg -bar
@@ -434,6 +437,7 @@ msg -bar
 unset PID_GEN
 PID_GEN=$(ps x|grep -v grep|grep "http-server.sh")
 [[ ! $PID_GEN ]] && PID_GEN="\033[1;31moff" || PID_GEN="\033[1;32monline"
+
 echo -e "\033[1;37mDirectorio de archivos sincronizados \033[1;31m${SCPT_DIR}\033[0m"
 msg -bar
 echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mGENERAR 1 KEY ALEATORIA"
@@ -448,8 +452,6 @@ echo -e "\033[1;32m[9] \033[1;31m> \033[1;37mVER REGISTRO"
 echo -e "\033[1;32m[10] \033[1;31m> \033[1;37m[!] \033[1;32mACTUALIZAR GENERADOR"
 msg -bar && echo -ne "$(msg -verd "[0]") $(msg -verm2 ">") "&& msg -bra "\033[1;41mSALIR DEL SCRIPT"
 msg -bar
-while :
-do
 echo -n "Opcion:"
 read opcion
 case $opcion in
