@@ -408,17 +408,16 @@ bot_gen
 meu_ip
 
 # EXECUCION DE MENU
+export_fun () {
 export -f msg
 export -f selection_fun
 export -f fun_trans
 export -f  menu_func
 export -f meu_ipe
 export -f fun_ip
+}
 
-while :
-do
-clear
-#########VISUALIZACION DE MENU
+cabesal () {
 msg -bar
 echo -e "\e[97m\033[1;41m        =====>>►► 🐲 GEN VPS•MX 🐲 ◄◄<<=====         \033[1;37m"
 msg -bar
@@ -433,7 +432,13 @@ echo -e "   \033[1;31mUSO DE RAM: \033[1;32m$_usor      \033[1;31mHORA: \033[1;3
 msg -bar
 echo -e " \033[1;37mKEYS USADAS: \033[1;32m$(cat $IVAR)"
 msg -bar
+}
 
+#########VISUALIZACION DE MENU
+while :
+do
+clear
+cabesal
 unset PID_GEN
 PID_GEN=$(ps x|grep -v grep|grep "http-server.sh")
 [[ ! $PID_GEN ]] && PID_GEN="\033[1;31moff" || PID_GEN="\033[1;32monline"
