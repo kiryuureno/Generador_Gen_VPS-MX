@@ -405,6 +405,8 @@ fi
 bot_gen
 }
 
+meu_ip
+
 # EXECUCION DE MENU
 export -f msg
 export -f selection_fun
@@ -429,7 +431,6 @@ msg -bar
 echo -e " \033[1;37mKEYS USADAS: \033[1;32m$(cat $IVAR)"
 msg -bar
 
-meu_ip
 unset PID_GEN
 PID_GEN=$(ps x|grep -v grep|grep "http-server.sh")
 [[ ! $PID_GEN ]] && PID_GEN="\033[1;31moff" || PID_GEN="\033[1;32monline"
@@ -447,33 +448,37 @@ echo -e "\033[1;32m[9] \033[1;31m> \033[1;37mVER REGISTRO"
 echo -e "\033[1;32m[10] \033[1;31m> \033[1;37m[!] \033[1;32mACTUALIZAR GENERADOR"
 msg -bar && echo -ne "$(msg -verd "[0]") $(msg -verm2 ">") "&& msg -bra "\033[1;41mSALIR DEL SCRIPT"
 msg -bar
-while [[ ${varread} != @([0-10]) ]]; do
-read -p "Opcion: " varread
-done
+while ;
+do
+read -p "Opcion: "
+case $opcion in
 msg -bar
-if [[ ${varread} = 0 ]]; then
-exit
-elif [[ ${varread} = 1 ]]; then
-gerar_key
-elif [[ ${varread} = 2 ]]; then
-remover_key
-elif [[ ${varread} = 3 ]]; then
-remover_key_usada
-elif [[ ${varread} = 4 ]]; then
-mudar_instacao
-elif [[ ${varread} = 5 ]]; then
-start_gen
-elif [[ ${varread} = 6 ]]; then
-links_inst
-elif [[ ${varread} = 7 ]]; then
-bot_gen
-elif [[ ${varread} = 8 ]]; then
-message_gen
-elif [[ ${varread} = 9 ]]; then
+0)
+exit;;
+1)
+gerar_key;;
+2)
+remover_key;;
+3)
+remover_key_usada;;
+4)
+mudar_instacao;;
+5)
+start_gen;;
+6)
+links_inst;;
+7)
+bot_gen;;
+8)
+message_gen;;
+9)
 echo -ne "\033[1;36m"
 cat /etc/gerar-sh-log 2>/dev/null || echo "NINGUN REGISTRO EN ESTE MOMENTO"
-echo -ne "\033[0m" && read -p "Enter"
-elif [[ ${varread} = 10 ]]; then
-atualizar_geb
-fi
+echo -ne "\033[0m" && read -p "Enter";;
+10)
+atualizar_geb;;
+*)
+;;
+esac
+done
 /usr/bin/gerar.sh
