@@ -401,6 +401,34 @@ echo -e "\033[1;37msudo apt update -y; apt upgrade -y; wget https://raw.githubus
 msg -bar
 read -p "Enter para Finalizar"
 }
+
+bot_gen () {
+
+echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mTOKEN DE SU BOT"
+echo -e "\033[1;32m[2] \033[1;31m> \033[1;37mSU ID DE TELEGRAM"
+echo -e "\033[1;32m[3] \033[1;31m> \033[1;37mINICIAR/PARA BOT"
+echo -e "\033[1;32m[4] \033[1;31m> \033[1;37mAYUDA"
+msg -bar && echo -ne "$(msg -verd "[0]") $(msg -verm2 ">") "&& msg -bra "\033[1;41mSALIR DEL SCRIPT"
+msg -bar
+
+while [[ ${varread} != @([0-5]) ]]; do
+read -p "Opcion: " varread
+done
+msg -bar
+if [[ ${varread} = 0 ]]; then
+echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mSALIR DEL SCRIPT"
+elif [[ ${varread} = 1 ]]; then
+echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mTOKEN DE SU BOT"
+elif [[ ${varread} = 2 ]]; then
+echo -e "\033[1;32m[2] \033[1;31m> \033[1;37mSU ID DE TELEGRAM"
+elif [[ ${varread} = 3 ]]; then
+echo -e "\033[1;32m[3] \033[1;31m> \033[1;37mINICIAR/PARA BOT"
+elif [[ ${varread} = 4 ]]; then
+echo -e "\033[1;32m[4] \033[1;31m> \033[1;37mAYUDA"
+fi
+bot_gen
+}
+
 meu_ip
 unset PID_GEN
 PID_GEN=$(ps x|grep -v grep|grep "http-server.sh")
@@ -413,12 +441,13 @@ echo -e "\033[1;32m[3] \033[1;31m> \033[1;37mLIMPIAR REGISTRO DE KEYS USADAS"
 echo -e "\033[1;32m[4] \033[1;31m> \033[1;37mALTERAR ARCHIVOS DE KEY BASICA"
 echo -e "\033[1;32m[5] \033[1;31m> \033[1;37mENCENDER/APAGAR GENERADOR $PID_GEN\033[0m"
 echo -e "\033[1;32m[6] \033[1;31m> \033[1;37mVER LINKS DE INSTALACION"
-echo -e "\033[1;32m[7] \033[1;31m> \033[1;37mCAMBIAR CREDITOS"
-echo -e "\033[1;32m[8] \033[1;31m> \033[1;37mVER REGISTRO"
-echo -e "\033[1;32m[9] \033[1;31m> \033[1;37m[!] \033[1;32mACTUALIZAR GENERADOR"
+echo -e "\033[1;32m[7] \033[1;31m> \033[1;37mCONFIGURAR BOT DE TELEGRAM"
+echo -e "\033[1;32m[8] \033[1;31m> \033[1;37mCAMBIAR CREDITOS"
+echo -e "\033[1;32m[9] \033[1;31m> \033[1;37mVER REGISTRO"
+echo -e "\033[1;32m[10] \033[1;31m> \033[1;37m[!] \033[1;32mACTUALIZAR GENERADOR"
 msg -bar && echo -ne "$(msg -verd "[0]") $(msg -verm2 ">") "&& msg -bra "\033[1;41mSALIR DEL SCRIPT"
 msg -bar
-while [[ ${varread} != @([0-9]) ]]; do
+while [[ ${varread} != @([0-10]) ]]; do
 read -p "Opcion: " varread
 done
 msg -bar
@@ -436,6 +465,8 @@ elif [[ ${varread} = 5 ]]; then
 start_gen
 elif [[ ${varread} = 6 ]]; then
 links_inst
+elif [[ ${varread} = 6 ]]; then
+bot_gen
 elif [[ ${varread} = 7 ]]; then
 message_gen
 elif [[ ${varread} = 8 ]]; then
