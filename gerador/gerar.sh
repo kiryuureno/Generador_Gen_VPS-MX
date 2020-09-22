@@ -379,30 +379,33 @@ read -p "Enter para Finalizar"
 }
 
 bot_gen () {
-
+while :
+do
+clear
+cabesal
 echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mTOKEN DE SU BOT"
 echo -e "\033[1;32m[2] \033[1;31m> \033[1;37mSU ID DE TELEGRAM"
 echo -e "\033[1;32m[3] \033[1;31m> \033[1;37mINICIAR/PARA BOT"
 echo -e "\033[1;32m[4] \033[1;31m> \033[1;37mAYUDA"
 msg -bar && echo -ne "$(msg -verd "[0]") $(msg -verm2 ">") "&& msg -bra "\033[1;41mSALIR DEL SCRIPT"
 msg -bar
-
-while [[ ${varread} != @([0-5]) ]]; do
-read -p "Opcion: " varread
+echo -n "Opcion: "
+read opcion
+case $opcion in
+1)
+echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mSALIR DEL SCRIPT";;
+2)
+echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mTOKEN DE SU BOT";;
+3)
+echo -e "\033[1;32m[2] \033[1;31m> \033[1;37mSU ID DE TELEGRAM";;
+4)
+echo -e "\033[1;32m[3] \033[1;31m> \033[1;37mINICIAR/PARA BOT";;
+5)
+echo -e "\033[1;32m[4] \033[1;31m> \033[1;37mAYUDA";;
+0)
+/usr/bin/gerar.sh;;
+esac
 done
-msg -bar
-if [[ ${varread} = 0 ]]; then
-echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mSALIR DEL SCRIPT"
-elif [[ ${varread} = 1 ]]; then
-echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mTOKEN DE SU BOT"
-elif [[ ${varread} = 2 ]]; then
-echo -e "\033[1;32m[2] \033[1;31m> \033[1;37mSU ID DE TELEGRAM"
-elif [[ ${varread} = 3 ]]; then
-echo -e "\033[1;32m[3] \033[1;31m> \033[1;37mINICIAR/PARA BOT"
-elif [[ ${varread} = 4 ]]; then
-echo -e "\033[1;32m[4] \033[1;31m> \033[1;37mAYUDA"
-fi
-bot_gen
 }
 
 meu_ip
