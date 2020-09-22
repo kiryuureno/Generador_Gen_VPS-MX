@@ -450,7 +450,8 @@ msg -bar && echo -ne "$(msg -verd "[0]") $(msg -verm2 ">") "&& msg -bra "\033[1;
 msg -bar
 while :
 do
-read -p "Opcion: "
+echo -n "Opcion:"
+read opcion
 case $opcion in
 0)
 exit;;
@@ -476,8 +477,6 @@ cat /etc/gerar-sh-log 2>/dev/null || echo "NINGUN REGISTRO EN ESTE MOMENTO"
 echo -ne "\033[0m" && read -p "Enter";;
 10)
 atualizar_geb;;
-*)
-;;
 esac
 done
 /usr/bin/gerar.sh
