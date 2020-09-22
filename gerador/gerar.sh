@@ -465,15 +465,15 @@ elif [[ ${varread} = 5 ]]; then
 start_gen
 elif [[ ${varread} = 6 ]]; then
 links_inst
-elif [[ ${varread} = 6 ]]; then
-bot_gen
 elif [[ ${varread} = 7 ]]; then
-message_gen
+bot_gen
 elif [[ ${varread} = 8 ]]; then
+message_gen
+elif [[ ${varread} = 9 ]]; then
 echo -ne "\033[1;36m"
 cat /etc/gerar-sh-log 2>/dev/null || echo "NINGUN REGISTRO EN ESTE MOMENTO"
 echo -ne "\033[0m" && read -p "Enter"
-elif [[ ${varread} = 9 ]]; then
+elif [[ ${varread} = 10 ]]; then
 atualizar_geb
 fi
 /usr/bin/gerar.sh
