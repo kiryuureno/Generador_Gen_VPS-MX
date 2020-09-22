@@ -77,30 +77,6 @@ echo "$MEU_IP2" > /etc/MEUIPADM
 fi
 }
 
-# EXECUCION DE MENU
-export -f msg
-export -f selection_fun
-export -f fun_trans
-export -f  menu_func
-export -f meu_ipe
-export -f fun_ip
-clear
-#########VISUALIZACION DE MENU
-msg -bar
-echo -e "\e[97m\033[1;41m        =====>>►► 🐲 GEN VPS•MX 🐲 ◄◄<<=====         \033[1;37m"
-msg -bar
-msg -ne "   S.O: " && echo -ne "\033[1;37m$(os_system)"
-msg -ne "       IP: " && echo -e "\033[1;37m$(meu_ipe)"
-echo -e "   \033[1;31mRAM: \033[1;32m$ram1                 \033[1;31mCPU: \033[1;32m $_core"
-echo -e "   \033[1;31mUSADA: \033[1;32m$ram3               \033[1;31mUSO DE CPU: \033[1;32m$_usop"
-echo -e "   \033[1;31mLIBRE: \033[1;32m$ram2               \033[1;31mFECHA: \033[1;37m$_fecha"
-echo -e "   \033[1;31mUSO DE RAM: \033[1;32m$_usor      \033[1;31mHORA: \033[1;37m$_hora"
-
-[[ -e ${SCPT_DIR}/message.txt ]] && msg -bar && msg -bra " \033[1;37mKEY GENERADOR BY \033[1;32m➣➣ \033[1;96m $(cat ${SCPT_DIR}/message.txt) "
-msg -bar
-echo -e " \033[1;37mKEYS USADAS: \033[1;32m$(cat $IVAR)"
-msg -bar
-
 # SCPT_DIR="/etc/SCRIPT"
 [[ ! -e ${SCPT_DIR} ]] && mkdir ${SCPT_DIR}
 INSTA_ARQUIVOS="ADMVPS.zip"
@@ -428,6 +404,30 @@ echo -e "\033[1;32m[4] \033[1;31m> \033[1;37mAYUDA"
 fi
 bot_gen
 }
+
+# EXECUCION DE MENU
+export -f msg
+export -f selection_fun
+export -f fun_trans
+export -f  menu_func
+export -f meu_ipe
+export -f fun_ip
+clear
+#########VISUALIZACION DE MENU
+msg -bar
+echo -e "\e[97m\033[1;41m        =====>>►► 🐲 GEN VPS•MX 🐲 ◄◄<<=====         \033[1;37m"
+msg -bar
+msg -ne "   S.O: " && echo -ne "\033[1;37m$(os_system)"
+msg -ne "       IP: " && echo -e "\033[1;37m$(meu_ipe)"
+echo -e "   \033[1;31mRAM: \033[1;32m$ram1                 \033[1;31mCPU: \033[1;32m $_core"
+echo -e "   \033[1;31mUSADA: \033[1;32m$ram3               \033[1;31mUSO DE CPU: \033[1;32m$_usop"
+echo -e "   \033[1;31mLIBRE: \033[1;32m$ram2               \033[1;31mFECHA: \033[1;37m$_fecha"
+echo -e "   \033[1;31mUSO DE RAM: \033[1;32m$_usor      \033[1;31mHORA: \033[1;37m$_hora"
+
+[[ -e ${SCPT_DIR}/message.txt ]] && msg -bar && msg -bra " \033[1;37mKEY GENERADOR BY \033[1;32m➣➣ \033[1;96m $(cat ${SCPT_DIR}/message.txt) "
+msg -bar
+echo -e " \033[1;37mKEYS USADAS: \033[1;32m$(cat $IVAR)"
+msg -bar
 
 meu_ip
 unset PID_GEN
