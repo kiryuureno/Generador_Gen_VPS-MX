@@ -381,17 +381,30 @@ read -p "Enter para Finalizar"
 bot_gen () {
 clear
 info_sys
-echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mTOKEN DE SU BOT"
-echo -e "\033[1;32m[2] \033[1;31m> \033[1;37mSU ID DE TELEGRAM"
-echo -e "\033[1;32m[3] \033[1;31m> \033[1;37mINICIAR/PARA BOT"
+CIDdir=/etc/ADM-db && [[ ! -d ${CIDdir} ]] && mkdir ${CIDdir}
+echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mTOKEN DEL BOT"
+echo -e "\033[1;32m[2] \033[1;31m> \033[1;37mID DE USUARIO TELEGRAM"
+echo -e "\033[1;32m[3] \033[1;31m> \033[1;37mINICIAR/PARAR BOT"
 echo -e "\033[1;32m[4] \033[1;31m> \033[1;37mAYUDA"
 msg -bar && echo -ne "$(msg -verd "[0]") $(msg -verm2 ">") "&& msg -bra "\033[1;41m<<ATRAS"
 msg -bar
 echo -n "Opcion: "
 read opcion
 case $opcion in
-1)echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mTOKEN DE SU BOT" && read foo && bot_gen;;
-2)echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mSU ID DE TELEGRAM" && read foo && bot_gen;;
+1)
+echo -n "ingrese token: "
+read opcion
+echo "$opcion" > ${CIDdir}/token
+echo -e "\033[1;37mtoken guardado!"
+read foo
+bot_gen;;
+2)
+echo -n "ingrese ID: "
+read opcion
+echo "$opcion" > ${CIDdir}/Admin-ID
+echo -e "\033[1;37mID guardado!"
+read foo
+bot_gen;;
 3)echo -e "\033[1;32m[2] \033[1;31m> \033[1;37mINICIAR/PARA BOT" && read foo && bot_gen;;
 4)echo -e "\033[1;32m[4] \033[1;31m> \033[1;37mAYUDA" && read foo && bot_gen;;
 0);;
