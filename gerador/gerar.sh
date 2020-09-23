@@ -379,38 +379,29 @@ read -p "Enter para Finalizar"
 }
 
 bot_gen () {
-while :
-do
 clear
-cabesal
+info_sys
 echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mTOKEN DE SU BOT"
 echo -e "\033[1;32m[2] \033[1;31m> \033[1;37mSU ID DE TELEGRAM"
 echo -e "\033[1;32m[3] \033[1;31m> \033[1;37mINICIAR/PARA BOT"
 echo -e "\033[1;32m[4] \033[1;31m> \033[1;37mAYUDA"
-msg -bar && echo -ne "$(msg -verd "[0]") $(msg -verm2 ">") "&& msg -bra "\033[1;41mSALIR DEL SCRIPT"
+msg -bar && echo -ne "$(msg -verd "[0]") $(msg -verm2 ">") "&& msg -bra "\033[1;41m<<ATRAS"
 msg -bar
 echo -n "Opcion: "
 read opcion
 case $opcion in
-1)
-echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mSALIR DEL SCRIPT";;
-2)
-echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mTOKEN DE SU BOT";;
-3)
-echo -e "\033[1;32m[2] \033[1;31m> \033[1;37mSU ID DE TELEGRAM";;
-4)
-echo -e "\033[1;32m[3] \033[1;31m> \033[1;37mINICIAR/PARA BOT";;
-5)
-echo -e "\033[1;32m[4] \033[1;31m> \033[1;37mAYUDA";;
-0)
-echo "";;
+1)echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mTOKEN DE SU BOT" && read foo && bot_gen;;
+2)echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mSU ID DE TELEGRAM" && read foo && bot_gen;;
+3)echo -e "\033[1;32m[2] \033[1;31m> \033[1;37mINICIAR/PARA BOT" && read foo && bot_gen;;
+4)echo -e "\033[1;32m[4] \033[1;31m> \033[1;37mAYUDA" && read foo && bot_gen;;
+0);;
+*)bot_gen;;
 esac
-done
 }
 
 meu_ip
 
-cabesal () {
+info_sys () {
 msg -bar
 echo -e "\e[97m\033[1;41m        =====>>►► 🐲 GEN VPS•MX 🐲 ◄◄<<=====         \033[1;37m"
 msg -bar
@@ -423,6 +414,9 @@ echo -e "   \033[1;31mUSO DE RAM: \033[1;32m$_usor      \033[1;31mHORA: \033[1;3
 
 [[ -e ${SCPT_DIR}/message.txt ]] && msg -bar && msg -bra " \033[1;37mKEY GENERADOR BY \033[1;32m➣➣ \033[1;96m $(cat ${SCPT_DIR}/message.txt) "
 msg -bar
+}
+
+key_used () {
 echo -e " \033[1;37mKEYS USADAS: \033[1;32m$(cat $IVAR)"
 msg -bar
 }
@@ -431,7 +425,8 @@ msg -bar
 while :
 do
 clear
-cabesal
+info_sys
+key_used
 unset PID_GEN
 PID_GEN=$(ps x|grep -v grep|grep "http-server.sh")
 [[ ! $PID_GEN ]] && PID_GEN="\033[1;31moff" || PID_GEN="\033[1;32monline"
@@ -453,30 +448,17 @@ msg -bar
 echo -n "Opcion:"
 read opcion
 case $opcion in
-0)
-exit;;
-1)
-gerar_key;;
-2)
-remover_key;;
-3)
-remover_key_usada;;
-4)
-mudar_instacao;;
-5)
-start_gen;;
-6)
-links_inst;;
-7)
-bot_gen;;
-8)
-message_gen;;
-9)
-echo -ne "\033[1;36m"
-cat /etc/gerar-sh-log 2>/dev/null || echo "NINGUN REGISTRO EN ESTE MOMENTO"
-echo -ne "\033[0m" && read -p "Enter";;
-10)
-atualizar_geb;;
+0)exit;;
+1)gerar_key;;
+2)remover_key;;
+3)remover_key_usada;;
+4)mudar_instacao;;
+5)start_gen;;
+6)links_inst;;
+7)bot_gen;;
+8)message_gen;;
+9)echo -ne "\033[1;36m" && cat /etc/gerar-sh-log 2>/dev/null || echo "NINGUN REGISTRO EN ESTE MOMENTO" && echo -ne "\033[0m" && read -p "Enter";;
+10)atualizar_geb;;
 esac
 done
 /usr/bin/gerar.sh
