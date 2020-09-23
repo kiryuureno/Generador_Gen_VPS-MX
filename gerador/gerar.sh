@@ -403,22 +403,12 @@ echo -e "\033[1;32m[3] \033[1;31m> \033[1;37mINICIAR/PARA BOT";;
 5)
 echo -e "\033[1;32m[4] \033[1;31m> \033[1;37mAYUDA";;
 0)
-/usr/bin/gerar.sh;;
+exit;;
 esac
 done
 }
 
 meu_ip
-
-# EXECUCION DE MENU
-export_fun () {
-export -f msg
-export -f selection_fun
-export -f fun_trans
-export -f  menu_func
-export -f meu_ipe
-export -f fun_ip
-}
 
 cabesal () {
 msg -bar
