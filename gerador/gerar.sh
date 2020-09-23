@@ -403,7 +403,7 @@ echo -e "\033[1;32m[3] \033[1;31m> \033[1;37mINICIAR/PARA BOT";;
 5)
 echo -e "\033[1;32m[4] \033[1;31m> \033[1;37mAYUDA";;
 0)
-exit;;
+echo "";;
 esac
 done
 }
