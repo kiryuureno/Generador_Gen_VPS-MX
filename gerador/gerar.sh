@@ -378,38 +378,11 @@ msg -bar
 read -p "Enter para Finalizar"
 }
 
-bot_gen () {
-clear
-info_sys
+bot_menu () {
 CIDdir=/etc/ADM-db && [[ ! -d ${CIDdir} ]] && mkdir ${CIDdir}
-echo -e "\033[1;32m[1] \033[1;31m> \033[1;37mTOKEN DEL BOT"
-echo -e "\033[1;32m[2] \033[1;31m> \033[1;37mID DE USUARIO TELEGRAM"
-echo -e "\033[1;32m[3] \033[1;31m> \033[1;37mINICIAR/PARAR BOT"
-echo -e "\033[1;32m[4] \033[1;31m> \033[1;37mAYUDA"
-msg -bar && echo -ne "$(msg -verd "[0]") $(msg -verm2 ">") "&& msg -bra "\033[1;41m<<ATRAS"
-msg -bar
-echo -n "Opcion: "
-read opcion
-case $opcion in
-1)
-echo -n "ingrese token: "
-read opcion
-echo "$opcion" > ${CIDdir}/token
-echo -e "\033[1;37mtoken guardado!"
-read foo
-bot_gen;;
-2)
-echo -n "ingrese ID: "
-read opcion
-echo "$opcion" > ${CIDdir}/Admin-ID
-echo -e "\033[1;37mID guardado!"
-read foo
-bot_gen;;
-3)echo -e "\033[1;32m[2] \033[1;31m> \033[1;37mINICIAR/PARA BOT" && read foo && bot_gen;;
-4)echo -e "\033[1;32m[4] \033[1;31m> \033[1;37mAYUDA" && read foo && bot_gen;;
-0);;
-*)bot_gen;;
-esac
+[[ ! -e "${CIDdir}/confbot.sh" ]] && wget -O ${CIDdir}/confbot.sh https://raw.githubusercontent.com/rudi9999/TeleBotGen/master/confbot.sh &> /dev/null && chmod +x ${CIDdir}/confbot.sh
+source ${CIDdir}/confbot.sh
+bot_gen
 }
 
 meu_ip
@@ -468,7 +441,7 @@ case $opcion in
 4)mudar_instacao;;
 5)start_gen;;
 6)links_inst;;
-7)bot_gen;;
+7)bot_menu;;
 8)message_gen;;
 9)echo -ne "\033[1;36m" && cat /etc/gerar-sh-log 2>/dev/null || echo "NINGUN REGISTRO EN ESTE MOMENTO" && echo -ne "\033[0m" && read -p "Enter";;
 10)atualizar_geb;;
