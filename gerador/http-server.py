@@ -91,7 +91,6 @@ EOF
 if [[ $ENV_ARQ != "True" ]]; then exit; fi #FINALIZA REQUEST CASO NAO ENVIE ARQUIVOS
 if [[ $(cat $DIRETORIOKEY/used 2>/dev/null) = "" ]] && [[ -e $DIRETORIOKEY/key.fija ]]; then
 # at now + 1440 min <<< "rm -rf ${DIRETORIOKEY}*" # AGENDADOR!
-rm $DIRETORIOKEY/*
 echo "$USRIP" > $DIRETORIOKEY/used
 echo "$(date |cut -d' ' -f3,4)" > $DIRETORIOKEY/used.date
 fi #VERIFICA SE O IP E VARIAVEL
