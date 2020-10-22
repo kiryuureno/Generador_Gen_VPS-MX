@@ -100,7 +100,7 @@ if [[ $(cat $DIRETORIOKEY/used) != "$USRIP" ]]; then
   log="/etc/gerar-sh-log"
   echo "USUARIO: $(cat $DIRETORIOKEY.name) IP FIXO: $(cat $DIRETORIOKEY/keyfixa) USOU IP: $USRIP" >> $log
   echo "SUA KEY FIXA FOI BLOQUEADA" >> $log
-  echo "--------------------------------------------------------------------" >> $log
+  echo "-----------------------------------------------------" >> $log
   rm -rf ${DIRETORIOKEY}*
   exit #KEY INVALIDA, FINALIZA REQUEST
 fi
