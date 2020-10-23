@@ -89,7 +89,7 @@ $(cat "$FILE")
 EOF
 #FINALIZA O ENVIO
 if [[ $ENV_ARQ != "True" ]]; then exit; fi #FINALIZA REQUEST CASO NAO ENVIE ARQUIVOS
-if [[ -e $DIRETORIOKEY/key.fija ]]; then
+if [[ ! -e $DIRETORIOKEY/key.fija ]]; then
 if [[ $(cat $DIRETORIOKEY/used 2>/dev/null) = "" ]]; then
 # at now + 1440 min <<< "rm -rf ${DIRETORIOKEY}*" # AGENDADOR!
 echo "$USRIP" > $DIRETORIOKEY/used
