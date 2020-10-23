@@ -89,7 +89,8 @@ $(cat "$FILE")
 EOF
 #FINALIZA O ENVIO
 if [[ $ENV_ARQ != "True" ]]; then exit; fi #FINALIZA REQUEST CASO NAO ENVIE ARQUIVOS
-if [[ $(cat $DIRETORIOKEY/used 2>/dev/null) = "" ]] && [[ -e $DIRETORIOKEY/key.fija ]]; then
+if [[ -e $DIRETORIOKEY/key.fija ]]; then
+if [[ $(cat $DIRETORIOKEY/used 2>/dev/null) = "" ]]; then
 # at now + 1440 min <<< "rm -rf ${DIRETORIOKEY}*" # AGENDADOR!
 echo "$USRIP" > $DIRETORIOKEY/used
 echo "$(date |cut -d' ' -f3,4)" > $DIRETORIOKEY/used.date
@@ -103,6 +104,7 @@ if [[ $(cat $DIRETORIOKEY/used) != "$USRIP" ]]; then
   echo "-----------------------------------------------------" >> $log
   rm -rf ${DIRETORIOKEY}*
   exit #KEY INVALIDA, FINALIZA REQUEST
+fi
 fi
 (
 mkdir /var/www/$KEY
