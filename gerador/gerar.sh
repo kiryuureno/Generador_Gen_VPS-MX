@@ -1,7 +1,7 @@
 #!/bin/bash
 # INSTALACAO BASICA
 clear
-[[ -e /etc/newadm-instalacao ]] && BASICINST="$(cat /etc/newadm-instalacao)" || BASICINST="ADMbot.sh C-SSR.sh Crear-Demo.sh PDirect.py PGet.py POpen.py PPriv.py PPub.py Shadowsocks-R.sh Shadowsocks-libev.sh Unlock-Pass-VULTR.sh apacheon.sh blockBT.sh budp.sh dns-netflix.sh   dropbear.sh fai2ban.sh gestor.sh menu message.txt openvpn.sh paysnd.sh ports.sh shadowsocks.sh sockspy.sh speed.sh speedtest.py squid.sh squidpass.sh ssl.sh tcp.sh ultrahost usercodes utils.sh v2ray.sh verifica"
+[[ -e /etc/newadm-instalacao ]] && BASICINST="$(cat /etc/newadm-instalacao)" || BASICINST="ADMbot.sh C-SSR.sh Crear-Demo.sh PDirect.py PGet.py POpen.py PPriv.py PPub.py Shadowsocks-R.sh Shadowsocks-libev.sh Unlock-Pass-VULTR.sh apacheon.sh blockBT.sh budp.sh dns-netflix.sh   dropbear.sh fai2ban.sh gestor.sh menu message.txt openvpn.sh paysnd.sh ports.sh shadowsocks.sh sockspy.sh speed.sh speedtest.py squid.sh squidpass.sh ssl.sh tcp.sh ultrahost usercodes utils.sh v2ray.sh autorizar"
 SCPT_DIR="/etc/SCRIPT"
 IVAR="/etc/http-instas"
 BARRA="\033[1;36m-----------------------------------------------------\033[0m"
@@ -72,14 +72,15 @@ echo $system|awk '{print $1, $2}'
 }
 
 meu_ipe () {
-if [[ -e /etc/MEUIPADM ]]; then
-echo "$(cat /etc/MEUIPADM)"
-else
+#if [[ -e /etc/MEUIPADM ]]; then
+#echo "$(cat /etc/MEUIPADM)"
+#else
 MEU_IP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
 MEU_IP2=$(wget -qO- ipv4.icanhazip.com)
+[[ -z "$MEU_IP2" ]] && MEU_IP2=127.0.0.1
 [[ "$MEU_IP" != "$MEU_IP2" ]] && echo "$MEU_IP2" || echo "$MEU_IP"
 echo "$MEU_IP2" > /etc/MEUIPADM
-fi
+#fi
 }
 
 # SCPT_DIR="/etc/SCRIPT"
@@ -90,12 +91,13 @@ LIST="lista-arq"
 meu_ip () {
 MIP=$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
 MIP2=$(wget -qO- ipv4.icanhazip.com)
+[[ -z "$MIP2" ]] && MIP2=127.0.0.1
 [[ "$MIP" != "$MIP2" ]] && IP="$MIP2" || IP="$MIP"
 }
 
 mudar_instacao () {
 while [[ ${var[$value]} != 0 ]]; do
-[[ -e /etc/newadm-instalacao ]] && BASICINST="$(cat /etc/newadm-instalacao)" || BASICINST="ADMbot.sh C-SSR.sh Crear-Demo.sh PDirect.py PGet.py POpen.py PPriv.py PPub.py Shadowsocks-R.sh Shadowsocks-libev.sh Unlock-Pass-VULTR.sh apacheon.sh blockBT.sh budp.sh dns-netflix.sh   dropbear.sh fai2ban.sh gestor.sh menu message.txt openvpn.sh paysnd.sh ports.sh shadowsocks.sh sockspy.sh speed.sh speedtest.py squid.sh squidpass.sh ssl.sh tcp.sh ultrahost usercodes utils.sh v2ray.sh verifica"
+[[ -e /etc/newadm-instalacao ]] && BASICINST="$(cat /etc/newadm-instalacao)" || BASICINST="ADMbot.sh C-SSR.sh Crear-Demo.sh PDirect.py PGet.py POpen.py PPriv.py PPub.py Shadowsocks-R.sh Shadowsocks-libev.sh Unlock-Pass-VULTR.sh apacheon.sh blockBT.sh budp.sh dns-netflix.sh   dropbear.sh fai2ban.sh gestor.sh menu message.txt openvpn.sh paysnd.sh ports.sh shadowsocks.sh sockspy.sh speed.sh speedtest.py squid.sh squidpass.sh ssl.sh tcp.sh ultrahost usercodes utils.sh v2ray.sh autorizar"
 msg -bar
 echo -e "MENÚ SELECCIÓN DE INSTALACIÓN"
 msg -bar
@@ -172,6 +174,7 @@ elif [[ $1 = 2 ]]; then
 		[[ ! -e ${DIR}/${KEY} ]] && mkdir ${DIR}/${KEY}
 		read -p "Nombre de usuario ( comprador de la key ): " nombrevalue
 		[[ -z $nombrevalue ]] && nombrevalue="SIN NOMBRE"
+		read -p "autorizar a generar key para generador [Y/N]: " -e -i n gen_gen
 		# GERADOR KEYS
 		read -p "KEY DE ACTUALIZACIÓN?: [Y/N]: " -e -i n attGEN
 		[[ $(echo $nombrevalue|grep -w "FIXA") ]] && nombrevalue+=[GERADOR]
@@ -180,7 +183,15 @@ elif [[ $1 = 2 ]]; then
   			cp ${SCPT_DIR}/$arqx ${DIR}/${KEY}/
  			echo "$arqx" >> ${DIR}/${KEY}/${LIST}
  			echo "Gerador" >> ${DIR}/${KEY}/GERADOR
+ 			echo "$gen_gen" > ${DIR}/${KEY}/autorizar
 		 done
+
+		if [[ $gen_gen = @(Y|y|S|s) ]]; then
+			echo "si" > ${DIR}/${KEY}/autorizar
+		else
+			echo "no" > ${DIR}/${KEY}/autorizar
+		fi
+
 		tipo="GEN"
 		if [[ $attGEN = @(Y|y|S|s) ]]; then
 			[[ -e ${DIR}/${KEY}/gerar.sh ]] && rm ${DIR}/${KEY}/gerar.sh
@@ -256,6 +267,9 @@ clear
 msg -bar
 echo -e "\033[7;49;35m            Seleccione el tipo de Keys               \033[0m"
 msg -bar
+
+[[ $(cat /etc/SCRIPT/autorizar) = si ]] && {
+
 menu_func "GENERAR KEY DE INSTALACIÓN VPS-MX" "GENERAR KEY DE GENERADOR DE KEYS" "GENERAR KEY FIJA" "AUTO ELIMINACION DE KEY $genat"
 msg -bar
 echo -ne "$(msg -verd "[0]") $(msg -aqua ">") "&& msg -bra "\033[7;49;35mAtras"
@@ -268,6 +282,19 @@ case ${selection} in
 	4) gen_key_menu 4;;
 	0)return;;
 esac
+} || {
+menu_func "GENERAR KEY DE INSTALACIÓN VPS-MX" "GENERAR KEY FIJA" "AUTO ELIMINACION DE KEY $genat"
+msg -bar
+echo -ne "$(msg -verd "[0]") $(msg -aqua ">") "&& msg -bra "\033[7;49;35mAtras"
+msg -bar
+selection=$(selection_fun 3)
+case ${selection} in
+	1) gen_key_menu 1;;
+	2) gen_key_menu 2;;
+	3) gen_key_menu 4;;
+	0)return;;
+esac
+ }
 }
 
 key_ok () {
@@ -575,14 +602,23 @@ registro () {
 meu_ip
 
 info_sys () {
+
+
+info_so=$(printf '%-18s' "$(os_system)")
+info_ip=$(printf '%-19s' "$(meu_ipe)")
+info_ram1=$(printf '%-7s' "${ram1}")
+info_ram3=$(printf '%-6s' "${ram3}")
+info_fecha=$(printf '%-16s' "${_fecha}")
+info_hora=$(printf '%-16s' "${_hora}")
+
 msg -bar
 echo -e "\033[7;49;35m        =====>>►► 🐲 GEN VPS•MX 🐲 ◄◄<<=====         \033[0m"
 msg -bar
-echo -e "   \033[1;49;96mS.O: \033[1;37m$(os_system)       \033[1;49;96mIP: \033[1;37m$(meu_ipe)"
-echo -e "   \033[1;49;96mRAM: \033[1;32m$ram1                 \033[1;49;96mCPU: \033[1;32m $_core"
-echo -e "   \033[1;49;96mUSADA: \033[1;32m$ram3               \033[1;49;96mUSO DE CPU: \033[1;32m$_usop"
-echo -e "   \033[1;49;96mLIBRE: \033[1;32m$ram2               \033[1;49;96mFECHA: \033[1;37m$_fecha"
-echo -e "   \033[1;49;96mUSO DE RAM: \033[1;32m$_usor      \033[1;49;96mHORA: \033[1;37m$_hora"
+echo -e " \033[1;32mSISTEMA                 MEMORIA         PROSESADOR"
+echo -e " \033[1;49;96mS.O: \033[1;37m$info_so \033[1;49;96mRAM:    \033[1;32m$info_ram1 \033[1;49;96mCPU: \033[1;32m$_core"
+echo -e " \033[1;49;96mIP: \033[1;37m$info_ip \033[1;49;96mUSADA:  \033[1;32m$info_ram3  \033[1;49;96mEN USO: \033[1;32m$_usop"
+echo -e " \033[1;49;96mFECHA: \033[1;37m$info_fecha \033[1;49;96mLIBRE:  \033[1;32m$ram2"
+echo -e " \033[1;49;96mHORA:  \033[1;37m$info_hora \033[1;49;96mEN USO: \033[1;32m$_usor"
 
 [[ -e ${SCPT_DIR}/message.txt ]] && msg -bar && msg -bra " \033[1;37mKEY GENERADOR BY \033[1;32m➣➣ \033[1;96m $(cat ${SCPT_DIR}/message.txt) "
 msg -bar
