@@ -155,10 +155,10 @@ echo "$txtofus" | rev
 
 gen_key_menu () {
 if [[ $1 = 1 ]]; then
+		#ADM BASIC
 		[[ ! -e ${DIR}/${KEY} ]] && mkdir ${DIR}/${KEY}
 		read -p "Nombre de usuario ( comprador de la key ): " nombrevalue
 		[[ -z $nombrevalue ]] && nombrevalue="SIN NOMBRE"
-		#ADM BASIC
  		arqslist="$BASICINST"
 		 for arqx in `echo "${arqslist}"`; do
 			[[ -e ${DIR}/${KEY}/$arqx ]] && continue #ANULA ARQUIVO CASO EXISTA
@@ -170,26 +170,25 @@ if [[ $1 = 1 ]]; then
 		 tipo="ADM"
 		 linck=1
 		 key_ok
-elif [[ $1 = 2 ]]; then
+elif [[ $1 = 3 ]]; then
+		# GERADOR KEYS
 		[[ ! -e ${DIR}/${KEY} ]] && mkdir ${DIR}/${KEY}
 		read -p "Nombre de usuario ( comprador de la key ): " nombrevalue
 		[[ -z $nombrevalue ]] && nombrevalue="SIN NOMBRE"
+		msg -bar
 		read -p "autorizar a generar key para generador [Y/N]: " -e -i n gen_gen
-		# GERADOR KEYS
+		msg -bar
 		read -p "KEY DE ACTUALIZACIÓN?: [Y/N]: " -e -i n attGEN
 		[[ $(echo $nombrevalue|grep -w "FIXA") ]] && nombrevalue+=[GERADOR]
  		 for arqx in `ls $SCPT_DIR`; do
   			[[ -e ${DIR}/${KEY}/$arqx ]] && continue #ANULA ARQUIVO CASO EXISTA
   			cp ${SCPT_DIR}/$arqx ${DIR}/${KEY}/
  			echo "$arqx" >> ${DIR}/${KEY}/${LIST}
- 			echo "Gerador" >> ${DIR}/${KEY}/GERADOR
- 			echo "$gen_gen" > ${DIR}/${KEY}/autorizar
 		 done
 
 		if [[ $gen_gen = @(Y|y|S|s) ]]; then
-			echo "si" > ${DIR}/${KEY}/autorizar
-		else
-			echo "no" > ${DIR}/${KEY}/autorizar
+			echo "generador autorizado para generar keys de generadores" > ${DIR}/${KEY}/autorizar
+			echo "autorizar" >> ${DIR}/${KEY}/${LIST}
 		fi
 
 		tipo="GEN"
@@ -204,11 +203,11 @@ elif [[ $1 = 2 ]]; then
 		[[ -e /etc/gen_at.txt ]] && at now +$(cat /etc/gen_at.txt) <<< "rm -rf ${DIR}/${KEY}.name; rm -rf ${DIR}/${KEY}"
 		linck=2
 		key_ok
-elif [[ $1 = 3 ]]; then
+elif [[ $1 = 2 ]]; then
+		#ADM BASIC FIJA
 		[[ ! -e ${DIR}/${KEY} ]] && mkdir ${DIR}/${KEY}
 		read -p "Nombre de usuario ( comprador de la key ): " nombrevalue
 		[[ -z $nombrevalue ]] && nombrevalue="SIN NOMBRE"
-		#ADM BASIC
  		arqslist="$BASICINST"
 		 for arqx in `echo "${arqslist}"`; do
 			[[ -e ${DIR}/${KEY}/$arqx ]] && continue #ANULA ARQUIVO CASO EXISTA
@@ -268,9 +267,9 @@ msg -bar
 echo -e "\033[7;49;35m            Seleccione el tipo de Keys               \033[0m"
 msg -bar
 
-[[ $(cat /etc/SCRIPT/autorizar) = si ]] && {
+[[ -e /etc/SCRIPT/gerar.sh ]] && {
 
-menu_func "GENERAR KEY DE INSTALACIÓN VPS-MX" "GENERAR KEY DE GENERADOR DE KEYS" "GENERAR KEY FIJA" "AUTO ELIMINACION DE KEY $genat"
+menu_func "GENERAR KEY DE INSTALACIÓN VPS-MX" "GENERAR KEY FIJA DE INSTALACIÓN VPS-MX" "GENERAR KEY DE GENERADOR DE KEYS" "AUTO ELIMINACION DE KEY $genat"
 msg -bar
 echo -ne "$(msg -verd "[0]") $(msg -aqua ">") "&& msg -bra "\033[7;49;35mAtras"
 msg -bar
@@ -283,7 +282,7 @@ case ${selection} in
 	0)return;;
 esac
 } || {
-menu_func "GENERAR KEY DE INSTALACIÓN VPS-MX" "GENERAR KEY FIJA" "AUTO ELIMINACION DE KEY $genat"
+menu_func "GENERAR KEY DE INSTALACIÓN VPS-MX" "GENERAR KEY FIJA DE INSTALACIÓN VPS-MX" "AUTO ELIMINACION DE KEY $genat"
 msg -bar
 echo -ne "$(msg -verd "[0]") $(msg -aqua ">") "&& msg -bra "\033[7;49;35mAtras"
 msg -bar
