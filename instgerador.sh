@@ -92,12 +92,14 @@ sed -i "s;Listen 80;Listen 81;g" /etc/apache2/ports.conf
 service apache2 restart > /dev/null 2>&1 &
 IVAR2="/etc/key-gerador"
 echo "$Key" > $IVAR
-cp $HOME/lista-arq /etc/SCRIPT
+# cp $HOME/lista-arq /etc/SCRIPT
 cp /bin/http-server.sh /etc/SCRIPT
 mv /etc/SCRIPT/http-server.sh /etc/SCRIPT/http-server.py
+chmod +x /etc/SCRIPT/http-server.py
 wget https://raw.githubusercontent.com/rudi9999/Generador_Gen_VPS-MX/master/gerador/gerar.sh &>/dev/null
 mv gerar.sh /etc/SCRIPT
-cd /etc/SCRIPT
+chmod +x /etc/SCRIPT/gerar.sh
+cd /etc/SCRIPT/
 rm -rf FERRAMENTA KEY KEY! INVALIDA!
 rm $HOME/lista-arq
 sed -i -e 's/\r$//' /usr/bin/gerar.sh
