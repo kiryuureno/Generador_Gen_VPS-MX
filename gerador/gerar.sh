@@ -420,27 +420,6 @@ let i++
 done
 }
 
-12remover_key_usada () {
-i=0
-[[ -z $(ls $DIR|grep -v "ERROR-KEY") ]] && return
-for arqs in `ls $DIR|grep -v "ERROR-KEY"|grep -v ".name"`; do
-arqsx=$(ofus "$IP:8888/$arqs/$LIST")
- if [[ -e ${DIR}/${arqs}/used.date ]]; then #KEY USADA
-  if [[ $(ls -l -c ${DIR}/${arqs}/used.date|cut -d' ' -f7) != $(date|cut -d' ' -f3) ]]; then
-  rm -rf ${DIR}/${arqs}*
-  echo -e "\033[1;31m[KEY]: $arqsx \033[1;32m(ELIMINADA!)\033[0m" 
-  else
-  echo -e "\033[1;32m[KEY]: $arqsx \033[1;32m(AÚN VÁLIDA!)\033[0m"
-  fi
- else
- echo -e "\033[1;32m[KEY]: $arqsx \033[1;32m(AÚN VÁLIDA!)\033[0m"
- fi
-let i++
-done
-msg -bar
-echo -ne "\033[0m" && read -p "Enter"
-}
-
 reg_key_used () {
 	echo > $IVAR
 	registro se_limpio_el_registro_de_keys_usadas
@@ -486,12 +465,54 @@ read -p "Enter"
 }
 
 atualizar_geb () {
-wget -O $HOME/instger.sh https://raw.githubusercontent.com/rudi9999/Generador_Gen_VPS-MX/master/instgerador.sh &>/dev/null
-chmod +x $HOME/instger.sh
-cd $HOME
-./instger.sh
-rm $HOME/instger.sh &>/dev/null
-registro actualizo_generador
+clear
+msg -bar
+echo -e " \033[1;37mACTUALIZADOR DE GENERADOR DE KEYS"
+msg -bar
+menu_func "USAR CONTRASEÑA DE ADMINISTRADOR" "USAR KEY DE ACTUALIZACION"
+msg -bar && echo -ne "$(msg -verd "[0]") $(msg -aqua ">") "&& msg -bra "\033[7;49;35mREGRESAR"
+msg -bar
+selection=$(selection_fun 2)
+case ${selection} in
+1)pass_admin;;
+2)key_update;;
+esac
+}
+
+key_update () {
+clear
+msg -bar
+echo "\033[1;37m ACTUALIZANDO......"
+msg -bar
+#rm -rf $SCPT_DIR &>/dev/null
+wget https://raw.githubusercontent.com/rudi9999/VPS-MX-8.0/master/instgerador.sh &> /dev/null; chmod 777 instgerador.sh* && ./instgerador.sh*
+sleep 3
+}
+
+pass_admin () {
+permited=$(ofus $(curl -sSL "https://raw.githubusercontent.com/rudi9999/Generador_Gen_VPS-MX/master/passw"))
+read -p "ESCRIBA SU CONTRASEÑA: " passw
+if [[ $permited = $passw ]]; then
+	clear
+	msg -bar
+	echo "\033[1;37m ACTUALIZANDO......"
+	msg -bar
+	sleep 2
+	wget -O $HOME/instger.sh https://raw.githubusercontent.com/rudi9999/Generador_Gen_VPS-MX/master/instgerador.sh &>/dev/null
+	chmod +x $HOME/instger.sh
+	cd $HOME
+	rm -rf $SCPT_DIR &>/dev/null
+	./instger.sh
+	rm $HOME/instger.sh &>/dev/null
+	registro actualizo_generador
+else
+	clear
+	msg -bar
+	echo -e "\033[1;37m LA CONTRASEÑA NO COINCIDE"
+	echo -e "\033[1;37m ACTUALIZACION CANSELADA!"
+	msg -bar
+	sleep 3
+fi
 }
 
 links_inst  () {
@@ -508,7 +529,7 @@ elif [[ $1 = 2 ]]; then
 msg -bar
 echo -e "\033[7;49;35m             LINKS INSTALL SCRIPT GEN VPS•MX         "
 msg -bar
-echo -e "\033[1;37msudo apt update -y; apt upgrade -y; wget https://raw.githubusercontent.com/rudi9999/VPS-MX-8.0/master/instalscript.sh &> /dev/null; chmod 777 instalscript.sh* && ./instalscript.sh*"
+echo -e "\033[1;37msudo apt update -y; apt upgrade -y; wget https://raw.githubusercontent.com/rudi9999/VPS-MX-8.0/master/instgerador.sh &> /dev/null; chmod 777 instgerador.sh* && ./instgerador.sh*"
 msg -bar
 fi
 }
@@ -600,9 +621,29 @@ registro () {
 
 meu_ip
 
+unistall () {
+clear
+echo -e "\033[1;31m ESTO QUITARA POR COMPLETO EL GENERADOR DE KEYS"
+read -p " ESTA SEGURO DE ESTO? [S/N]: " -e -i n unistal
+if [[ $unistal = @(Y|y|S|s) ]]; then
+unset PID_GEN
+PID_GEN=$(ps x|grep -v grep|grep "http-server.sh")
+[[ ! -z $PID_GEN ]] && start_gen
+rm -rf /etc/MEUIPADM &>/dev/null
+rm -rf /etc/gen_at.txt &>/dev/null
+rm -rf /etc/texto-adm &>/dev/null
+rm -rf /etc/newadm-instalacao &>/dev/null
+rm -rf /usr/bin/trans &>/dev/null
+rm -rf /bin/http-server.sh &>/dev/null
+rm -rf $DIR &>/dev/null
+rm -rf $SCPT_DIR &>/dev/null
+rm -rf /etc/gerar-sh-log &>/dev/null
+rm -rf /usr/bin/gerar &>/dev/null
+rm -rf /usr/bin/gerar.sh &>/dev/null
+fi
+}
+
 info_sys () {
-
-
 info_so=$(printf '%-18s' "$(os_system)")
 info_ip=$(printf '%-19s' "$(meu_ipe)")
 info_ram1=$(printf '%-7s' "${ram1}")
@@ -633,10 +674,10 @@ PID_GEN=$(ps x|grep -v grep|grep "http-server.sh")
 [[ ! $PID_GEN ]] && PID_GEN="\033[1;31moff" || PID_GEN="\033[1;32monline"
 echo -e "\033[1;37mDirectorio de archivos sincronizados \033[1;31m${SCPT_DIR}\033[0m"
 msg -bar
-menu_func "GENERADOR DE KEYS" "ELIMINAR/MIRAR KEYS" "LIMPIAR REGISTRO DE KEYS USADAS" "ALTERAR ARCHIVOS DE KEY BASICA" "ENCENDER/APAGAR GENERADOR $PID_GEN\033[0m" "VER LINKS DE INSTALACION" "CONFIGURAR BOT DE TELEGRAM" "CAMBIAR CREDITOS" "VER REGISTRO" "-vd ACTUALIZAR GENERADOR"
+menu_func "GENERADOR DE KEYS" "ELIMINAR/MIRAR KEYS" "LIMPIAR REGISTRO DE KEYS USADAS" "ALTERAR ARCHIVOS DE KEY BASICA" "ENCENDER/APAGAR GENERADOR $PID_GEN\033[0m" "VER LINKS DE INSTALACION" "CONFIGURAR BOT DE TELEGRAM" "CAMBIAR CREDITOS" "VER REGISTRO" "-vd ACTUALIZAR GENERADOR" "-vm DESINSTALAR GENERADOR"
 msg -bar && echo -ne "$(msg -verd "[0]") $(msg -aqua ">") "&& msg -bra "\033[7;49;35mSALIR DEL SCRIPT"
 msg -bar
-selection=$(selection_fun 10)
+selection=$(selection_fun 11)
 case ${selection} in
 1)gerar_key;;
 2)remover_key;;
@@ -648,6 +689,7 @@ case ${selection} in
 8)message_gen;;
 9)registro 1;;
 10)atualizar_geb;;
+11)unistall;;
 0)cd $HOME && exit 0;;
 esac
 /usr/bin/gerar.sh
