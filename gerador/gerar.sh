@@ -482,7 +482,7 @@ esac
 key_update () {
 clear
 msg -bar
-echo "\033[1;37m ACTUALIZANDO......"
+echo -e "\033[1;37m ACTUALIZANDO......"
 msg -bar
 rm -rf $SCPT_DIR &>/dev/null
 wget https://raw.githubusercontent.com/rudi9999/VPS-MX-8.0/master/instgerador.sh &> /dev/null; chmod 777 instgerador.sh* && ./instgerador.sh*
@@ -495,7 +495,7 @@ read -p "ESCRIBA SU CONTRASEÑA: " passw
 if [[ $permited = $passw ]]; then
 	clear
 	msg -bar
-	echo "\033[1;37m ACTUALIZANDO......"
+	echo -e "\033[1;37m ACTUALIZANDO......"
 	msg -bar
 	sleep 2
 	wget -O $HOME/instger.sh https://raw.githubusercontent.com/rudi9999/Generador_Gen_VPS-MX/master/instgerador.sh &>/dev/null
