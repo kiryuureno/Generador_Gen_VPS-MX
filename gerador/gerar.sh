@@ -431,11 +431,31 @@ PIDGEN=$(ps aux|grep -v grep|grep "http-server.sh")
 if [[ ! $PIDGEN ]]; then
 screen -dmS generador /bin/http-server.sh -start
 registro generador_online
-# screen -dmS generador /bin/http-server-pass.sh -start
+clear
+msg -bar
+echo -e "\033[1;32m                Generador en linea"
+msg -bar
+echo -ne "\033[1;97m Poner en linea despues de un reinicio [s/n]: "
+read start_ini
+msg -bar
+[[ $start_ini = @(s|S|y|Y) ]] && {
+	crontab -l > /root/cron
+	echo "@reboot screen -dmS generador /bin/http-server.sh -start" >> /root/cron
+	crontab /root/cron
+	rm /root/cron
+}
 else
 killall http-server.sh
 registro generador_offline
-# killall http-server-pass.sh
+crontab -l > /root/cron
+sed -i '/http-server.sh/ d' /root/cron
+crontab /root/cron
+rm /root/cron
+clear
+msg -bar
+echo -e "\033[1;31m            Generador fuera de linea"
+msg -bar
+sleep 3
 fi
 }
 
@@ -652,7 +672,7 @@ info_fecha=$(printf '%-16s' "${_fecha}")
 info_hora=$(printf '%-16s' "${_hora}")
 
 msg -bar
-echo -e "\033[7;49;35m        =====>>►► 🐲 GEN SPIDER•VPS 🐲 ◄◄<<=====         \033[0m"
+echo -e "\033[7;49;35m      =====>>►► 🐲 GEN SPIDER•VPS 🐲 ◄◄<<=====       \033[0m"
 msg -bar
 echo -e " \033[1;32mSISTEMA                 MEMORIA         PROSESADOR"
 echo -e " \033[1;49;96mS.O: \033[1;37m$info_so \033[1;49;96mRAM:    \033[1;32m$info_ram1 \033[1;49;96mCPU: \033[1;32m$_core"

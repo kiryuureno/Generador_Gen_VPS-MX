@@ -15,9 +15,22 @@ if [ "$pid_badvpn" = "" ]; then
     screen -dmS badvpn2 /bin/badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 1000 --max-connections-for-client 10 
     [[ "$(ps x | grep badvpn | grep -v grep | awk '{print $1}')" ]] && msg -verd "                  ACTIVADO CON EXITO" || msg -ama "                 Fallo"
 	msg -bar
+    echo -ne "\033[1;97m activar BADVPN-(UDP:7300) despues de un reinicio [s/n]: "
+    read ini_udpg
+    [[ $ini_udpg = @(s|S|y|Y) ]] && {
+        crontab -l > /root/cron
+        echo '@reboot screen -dmS badvpn2 /bin/badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 1000 --max-connections-for-client 10' >> /root/cron
+        crontab /root/cron
+        rm /root/cron
+    }
+    msg -bar
 else
     msg -ama "                DESACTIVANDO BADVPN"
     msg -bar
+    crontab -l > /root/cron
+    sed -i '/badvpn/ d' /root/cron
+    crontab /root/cron
+    rm /root/cron
     kill -9 $(ps x | grep badvpn | grep -v grep | awk '{print $1'}) > /dev/null 2>&1
     killall badvpn-udpgw > /dev/null 2>&1
     [[ ! "$(ps x | grep badvpn | grep -v grep | awk '{print $1}')" ]] && msg -ne "                DESACTIVADO CON EXITO \n"
