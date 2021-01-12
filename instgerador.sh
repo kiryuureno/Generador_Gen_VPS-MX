@@ -138,9 +138,9 @@ function_verify () {
   }
 }
 
+install_ini
 meu_ip
 function_verify
-install_ini
 
 echo -e "$BARRA"
 echo -e "\033[1;33mDescargando archivos... "
