@@ -1,7 +1,49 @@
 #!/bin/bash
 # INSTALACAO BASICA
 clear
-[[ -e /etc/newadm-instalacao ]] && BASICINST="$(cat /etc/newadm-instalacao)" || BASICINST="ADMbot.sh C-SSR.sh Crear-Demo.sh PDirect.py PGet.py POpen.py PPriv.py PPub.py Shadowsocks-R.sh Shadowsocks-libev.sh Unlock-Pass-VULTR.sh apacheon.sh blockBT.sh budp.sh dns-netflix.sh   dropbear.sh fai2ban.sh gestor.sh menu message.txt openvpn.sh paysnd.sh ports.sh shadowsocks.sh sockspy.sh speed.sh speedtest.py squid.sh squidpass.sh ssl.sh tcp.sh ultrahost usercodes utils.sh v2ray.sh Proxy.sh"
+#[[ -e /etc/newadm-instalacao ]] && BASICINST="$(cat /etc/newadm-instalacao)" || BASICINST="ADMbot.sh C-SSR.sh Crear-Demo.sh PDirect.py PGet.py POpen.py PPriv.py PPub.py Shadowsocks-R.sh Shadowsocks-libev.sh Unlock-Pass-VULTR.sh apacheon.sh blockBT.sh budp.sh dns-netflix.sh   dropbear.sh fai2ban.sh gestor.sh menu message.txt openvpn.sh paysnd.sh ports.sh shadowsocks.sh sockspy.sh speed.sh speedtest.py squid.sh squidpass.sh ssl.sh tcp.sh ultrahost usercodes utils.sh v2ray.sh Proxy.sh"
+[[ -e /etc/newadm-instalacao ]] && { 
+	BASICINST="$(cat /etc/newadm-instalacao)"
+} || {
+	BASICINST="
+	ADMbot.sh
+	C-SSR.sh
+	Crear-Demo.sh
+	PDirect.py
+	PGet.py
+	POpen.py
+	PPriv.py
+	PPub.py
+	Shadowsocks-R.sh
+	Shadowsocks-libev.sh
+	Unlock-Pass-VULTR.sh
+	apacheon.sh
+	blockBT.sh
+	budp.sh
+	dns-netflix.sh
+	dropbear.sh
+	fai2ban.sh
+	gestor.sh
+	menu
+	message.txt
+	openvpn.sh
+	paysnd.sh
+	ports.sh
+	shadowsocks.sh
+	sockspy.sh
+	speed.sh
+	speedtest.py
+	squid.sh
+	squidpass.sh
+	ssl.sh
+	tcp.sh
+	ultrahost
+	usercodes
+	utils.sh
+	v2ray.sh
+	Proxy.sh"
+}
+
 SCPT_DIR="/etc/SCRIPT"
 IVAR="/etc/http-instas"
 BARRA="\033[1;36m-----------------------------------------------------\033[0m"
@@ -97,13 +139,55 @@ MIP2=$(wget -qO- ipv4.icanhazip.com)
 
 mudar_instacao () {
 while [[ ${var[$value]} != 0 ]]; do
-[[ -e /etc/newadm-instalacao ]] && BASICINST="$(cat /etc/newadm-instalacao)" || BASICINST="ADMbot.sh C-SSR.sh Crear-Demo.sh PDirect.py PGet.py POpen.py PPriv.py PPub.py Shadowsocks-R.sh Shadowsocks-libev.sh Unlock-Pass-VULTR.sh apacheon.sh blockBT.sh budp.sh dns-netflix.sh   dropbear.sh fai2ban.sh gestor.sh menu message.txt openvpn.sh paysnd.sh ports.sh shadowsocks.sh sockspy.sh speed.sh speedtest.py squid.sh squidpass.sh ssl.sh tcp.sh ultrahost usercodes utils.sh v2ray.sh Proxy.sh"
+#[[ -e /etc/newadm-instalacao ]] && BASICINST="$(cat /etc/newadm-instalacao)" || BASICINST="ADMbot.sh C-SSR.sh Crear-Demo.sh PDirect.py PGet.py POpen.py PPriv.py PPub.py Shadowsocks-R.sh Shadowsocks-libev.sh Unlock-Pass-VULTR.sh apacheon.sh blockBT.sh budp.sh dns-netflix.sh   dropbear.sh fai2ban.sh gestor.sh menu message.txt openvpn.sh paysnd.sh ports.sh shadowsocks.sh sockspy.sh speed.sh speedtest.py squid.sh squidpass.sh ssl.sh tcp.sh ultrahost usercodes utils.sh v2ray.sh Proxy.sh"
+[[ -e /etc/newadm-instalacao ]] && { 
+	BASICINST="$(cat /etc/newadm-instalacao)"
+} || {
+	BASICINST="
+	ADMbot.sh
+	C-SSR.sh
+	Crear-Demo.sh
+	PDirect.py
+	PGet.py
+	POpen.py
+	PPriv.py
+	PPub.py
+	Shadowsocks-R.sh
+	Shadowsocks-libev.sh
+	Unlock-Pass-VULTR.sh
+	apacheon.sh
+	blockBT.sh
+	budp.sh
+	dns-netflix.sh
+	dropbear.sh
+	fai2ban.sh
+	gestor.sh
+	menu
+	message.txt
+	openvpn.sh
+	paysnd.sh
+	ports.sh
+	shadowsocks.sh
+	sockspy.sh
+	speed.sh
+	speedtest.py
+	squid.sh
+	squidpass.sh
+	ssl.sh
+	tcp.sh
+	ultrahost
+	usercodes
+	utils.sh
+	v2ray.sh
+	Proxy.sh"
+}
+
 msg -bar
 echo -e "MENÚ SELECCIÓN DE INSTALACIÓN"
 msg -bar
 i=1
 for arqx in `ls ${SCPT_DIR}`; do
-[[ $arqx = @(gerar.sh|http-server.py|lista-arq) ]] && continue
+[[ $arqx = @(gerar.sh|http-server.py) ]] && continue
 [[ $(echo $BASICINST|grep -w "$arqx") ]] && echo -e "\033[1;32m[$i] \033[1;37m- [\033[1;31mX\033[1;37m] - \033[1;96m$arqx" || echo -e "\033[1;32m[$i] \033[1;37m- [ ] - \033[1;96m$arqx"
 var[$i]="$arqx"
 let i++
@@ -166,7 +250,7 @@ if [[ $1 = 1 ]]; then
 			echo "$arqx" >> ${DIR}/${KEY}/${LIST}
 		 done
 		 echo "$nombrevalue" > ${DIR}/${KEY}.name
-		 [[ -e /etc/gen_at.txt ]] && at now +$(cat /etc/gen_at.txt) <<< "rm -rf ${DIR}/${KEY}.name; rm -rf ${DIR}/${KEY}"
+		 [[ -e /etc/gen_at.txt ]] && at now +$(cat /etc/gen_at.txt) <<< "rm -rf ${DIR}/${KEY}.name; rm -rf ${DIR}/${KEY}" &>/dev/null
 		 tipo="ADM"
 		 linck=1
 		 key_ok
@@ -187,7 +271,7 @@ elif [[ $1 = 3 ]]; then
 		 done
 
 		if [[ $gen_gen = @(Y|y|S|s) ]]; then
-			echo "generador autorizado para generar keys de generadores" > ${DIR}/${KEY}/autorizar
+			echo "generador autorizado para generar keys de generadores" > ${DIR}/${KEY}/autorizar &>/dev/null
 			echo "autorizar" >> ${DIR}/${KEY}/${LIST}
 		fi
 
@@ -200,7 +284,7 @@ elif [[ $1 = 3 ]]; then
 		fi
 		nombrevalue+="_GEN"
 		echo "$nombrevalue" > ${DIR}/${KEY}.name
-		[[ -e /etc/gen_at.txt ]] && at now +$(cat /etc/gen_at.txt) <<< "rm -rf ${DIR}/${KEY}.name; rm -rf ${DIR}/${KEY}"
+		[[ -e /etc/gen_at.txt ]] && at now +$(cat /etc/gen_at.txt) <<< "rm -rf ${DIR}/${KEY}.name; rm -rf ${DIR}/${KEY}" &>/dev/null
 		linck=2
 		key_ok
 elif [[ $1 = 2 ]]; then
@@ -216,6 +300,7 @@ elif [[ $1 = 2 ]]; then
 		 done
 		 echo KEY_FIJA > ${DIR}/${KEY}/key.fija
 		 echo "$nombrevalue" > ${DIR}/${KEY}.name
+		 [[ -e /etc/gen_at.txt ]] && at now +$(cat /etc/gen_at.txt) <<< "rm -rf ${DIR}/${KEY}.name; rm -rf ${DIR}/${KEY}" &>/dev/null
 		 tipo="FIJADA"
 		 linck=1
 		 key_ok
