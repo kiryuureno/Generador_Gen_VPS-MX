@@ -141,11 +141,24 @@ chmod +x ${ARQ}/$1
 fun_ip
 wget -O /usr/bin/trans https://www.dropbox.com/s/l6iqf5xjtjmpdx5/trans?dl=0 &> /dev/null
 msg -bar2
-msg -ama "[ NEW - ULTIMATE - SCRIPT ]"
+msg -ama "[ NEW2 - ULTIMATE - SCRIPT ]"
 [[ $1 = "" ]] && funcao_idioma || {
 [[ ${#1} -gt 2 ]] && funcao_idioma || id="$1"
  }
-
+ error_fun () {
+msg -bar2 && msg -verm "$(source trans -b pt:${id} "Esta Chave Era de Outro Servidor Portanto Foi Excluida"|sed -e 's/[^a-z -]//ig') " && msg -bar2
+[[ -d ${SCPinstal} ]] && rm -rf ${SCPinstal}
+exit 1
+}
+invalid_key () {
+msg -bar2 && msg -verm "Key Failed! " && msg -bar2
+[[ -e $HOME/lista-arq ]] && rm $HOME/lista-arq
+exit 1
+}
+while [[ ! $Key ]]; do
+msg -ne "Script Key: " && read Key
+tput cuu1 && tput dl1
+done
 msg -ne "Key: "
 cd $HOME
 wget -O $HOME/lista-arq $(ofus "$Key")/$IP > /dev/null 2>&1 && echo -e "\033[1;32m Verified" || {
@@ -153,7 +166,7 @@ wget -O $HOME/lista-arq $(ofus "$Key")/$IP > /dev/null 2>&1 && echo -e "\033[1;3
    invalid_key
    exit
    }
-IP=$(ofus "$Key" | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}') && echo "$IP" > /usr/bin/vendor_code
+IP=$(ofus "20.195.198.100" | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}') && echo "$IP" > /usr/bin/vendor_code
 sleep 1s
 updatedb
 if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") ]]; then
