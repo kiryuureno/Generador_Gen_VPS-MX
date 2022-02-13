@@ -146,14 +146,10 @@ msg -ama "[ NEW - ULTIMATE - SCRIPT ]"
 [[ ${#1} -gt 2 ]] && funcao_idioma || id="$1"
  }
 error_fun () {
-msg -bar2 && msg -verm "$(source trans -b pt:${id} "Esta Chave Era de Outro Servidor Portanto Foi Excluida"|sed -e 's/[^a-z -]//ig') " && msg -bar2
-[[ -d ${SCPinstal} ]] && rm -rf ${SCPinstal}
-exit 1
+
 }
 invalid_key () {
-msg -bar2 && msg -verm "Key Failed! " && msg -bar2
-[[ -e $HOME/lista-arq ]] && rm $HOME/lista-arq
-exit 1
+
 }
 while [[ ! $Key ]]; do
 msg -ne "Script Key: " && read Key
