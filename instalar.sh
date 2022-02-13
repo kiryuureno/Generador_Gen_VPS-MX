@@ -151,7 +151,7 @@ error_fun () {
 invalid_key () {
 
 }
-while [[ ! $Key ]]; do
+while [[ $Key ]]; do
 msg -ne "Script Key: " && read Key
 tput cuu1 && tput dl1
 done
