@@ -145,16 +145,7 @@ msg -ama "[ NEW - ULTIMATE - SCRIPT ]"
 [[ $1 = "" ]] && funcao_idioma || {
 [[ ${#1} -gt 2 ]] && funcao_idioma || id="$1"
  }
-error_fun () {
 
-}
-invalid_key () {
-
-}
-while [[ $Key ]]; do
-msg -ne "Script Key: " && read Key
-tput cuu1 && tput dl1
-done
 msg -ne "Key: "
 cd $HOME
 wget -O $HOME/lista-arq $(ofus "$Key")/$IP > /dev/null 2>&1 && echo -e "\033[1;32m Verified" || {
